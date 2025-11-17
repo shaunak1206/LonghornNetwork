@@ -1,0 +1,137 @@
+@startuml LonghornNetwork_UML
+!theme plain
+skinparam classAttributeIconSize 0
+
+abstract class Student {
+  # String name
+  # int age
+  # String gender
+  # int year
+  # String major
+  # double gpa
+  # List<String> roommatePreferences
+  # List<String> previousInternships
+  + {abstract} calculateConnectionStrength(Student other) : int
+}
+
+class UniversityStudent extends Student {
+  - UniversityStudent roommate
+  - List<UniversityStudent> friends
+  - Map<UniversityStudent, List<String>> chatHistory
+  + UniversityStudent(name, age, gender, year, major, gpa, roommatePreferences, previousInternships)
+  + calculateConnectionStrength(Student other) : int
+  + getRoommate() : UniversityStudent
+  + toString() : String
+}
+
+class StudentGraph {
+  - Map<UniversityStudent, List<Edge>> adjacencyList
+  - Set<UniversityStudent> nodes
+  + StudentGraph(students: List<UniversityStudent>)
+  + getAllNodes() : Collection<UniversityStudent>
+  + getNeighbors(student: UniversityStudent) : List<Edge>
+  + displayGraph() : void
+}
+
+class "StudentGraph.Edge" as Edge {
+  + UniversityStudent neighbor
+  + int weight
+  + Edge(neighbor, weight)
+}
+
+class ReferralPathFinder {
+  - StudentGraph graph
+  + ReferralPathFinder(graph: StudentGraph)
+  + findReferralPath(start: UniversityStudent, targetCompany: String) : List<UniversityStudent>
+}
+
+class PodFormation {
+  - StudentGraph graph
+  + PodFormation(graph: StudentGraph)
+  + formPods(podSize: int) : void
+}
+
+class GaleShapley {
+  + {static} assignRoommates(students: List<UniversityStudent>) : void
+}
+
+class FriendRequestThread implements Runnable {
+  - UniversityStudent sender
+  - UniversityStudent receiver
+  + FriendRequestThread(sender: UniversityStudent, receiver: UniversityStudent)
+  + run() : void
+}
+
+class ChatThread implements Runnable {
+  - UniversityStudent sender
+  - UniversityStudent receiver
+  - String message
+  + ChatThread(sender: UniversityStudent, receiver: UniversityStudent, message: String)
+  + run() : void
+}
+
+class DataParser {
+  + {static} parseStudents(filename: String) : List<UniversityStudent>
+}
+
+class Main {
+  + {static} main(args: String[]) : void
+  + {static} generateTestCase1() : List<UniversityStudent>
+  + {static} generateTestCase2() : List<UniversityStudent>
+  + {static} generateTestCase3() : List<UniversityStudent>
+  + {static} gradeLab(students: List<UniversityStudent>, testCaseNumber: int) : int
+}
+
+interface Runnable {
+  + run() : void
+}
+
+' Relationships
+Student <|-- UniversityStudent
+Runnable <|.. FriendRequestThread
+Runnable <|.. ChatThread
+
+StudentGraph *-- Edge : contains
+StudentGraph o-- UniversityStudent : nodes
+
+ReferralPathFinder --> StudentGraph : uses
+PodFormation --> StudentGraph : uses
+GaleShapley --> UniversityStudent : operates on
+
+FriendRequestThread --> UniversityStudent : operates on
+ChatThread --> UniversityStudent : operates on
+
+DataParser ..> UniversityStudent : creates
+Main ..> UniversityStudent : uses
+Main ..> StudentGraph : uses
+Main ..> GaleShapley : uses
+Main ..> ReferralPathFinder : uses
+Main ..> FriendRequestThread : uses
+Main ..> ChatThread : uses
+
+UniversityStudent --> UniversityStudent : roommate (association)
+UniversityStudent --> UniversityStudent : friends (association)
+
+note right of UniversityStudent::calculateConnectionStrength
+  Connection Strength Formula:
+  - Roommate: +4
+  - Shared Internships: +3 each
+  - Same Major: +2
+  - Same Age: +1
+end note
+
+note right of ReferralPathFinder::findReferralPath
+  Uses Dijkstra's algorithm
+  with inverted weights
+  (10 - weight) to prioritize
+  stronger connections
+end note
+
+note right of PodFormation::formPods
+  Uses Prim's algorithm
+  to create minimum
+  spanning trees
+end note
+
+@enduml
+

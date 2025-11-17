@@ -1,0 +1,104 @@
+@startuml LonghornNetwork_State
+!theme plain
+
+title Longhorn Network - State Diagram
+
+[*] --> SystemInitialization
+
+state SystemInitialization {
+  [*] --> LoadingData
+  LoadingData --> ParsingStudents : DataParser.parseStudents()
+  ParsingStudents --> CreatingGraph : Build StudentGraph
+  CreatingGraph --> [*]
+}
+
+SystemInitialization --> StudentNetworkReady
+
+state StudentNetworkReady {
+  [*] --> Idle
+  
+  Idle --> ProcessingRoommateMatching : GaleShapley.assignRoommates()
+  Idle --> FindingReferralPath : ReferralPathFinder.findReferralPath()
+  Idle --> FormingPods : PodFormation.formPods()
+  Idle --> ProcessingFriendRequest : FriendRequestThread.run()
+  Idle --> ProcessingChat : ChatThread.run()
+  
+  state ProcessingRoommateMatching {
+    [*] --> BuildingPreferenceLists
+    BuildingPreferenceLists --> MatchingStudents : Process proposals
+    MatchingStudents --> VerifyingStability : Check stability
+    VerifyingStability --> [*] : Stable matching found
+  }
+  
+  state FindingReferralPath {
+    [*] --> InitializingDijkstra
+    InitializingDijkstra --> ExploringGraph : Traverse with inverted weights
+    ExploringGraph --> CheckingInternships : Found student
+    CheckingInternships --> PathFound : Target company found
+    CheckingInternships --> ExploringGraph : Continue search
+    ExploringGraph --> NoPathFound : All nodes explored
+    PathFound --> [*]
+    NoPathFound --> [*]
+  }
+  
+  state FormingPods {
+    [*] --> InitializingPrim
+    InitializingPrim --> BuildingMST : Create minimum spanning tree
+    BuildingMST --> GroupingStudents : Form pods by size
+    GroupingStudents --> [*]
+  }
+  
+  state ProcessingFriendRequest {
+    [*] --> AcquiringLock : Thread synchronization
+    AcquiringLock --> UpdatingFriendLists : Add to friend lists
+    UpdatingFriendLists --> ReleasingLock : Thread-safe update
+    ReleasingLock --> [*]
+  }
+  
+  state ProcessingChat {
+    [*] --> AcquiringChatLock : Thread synchronization
+    AcquiringChatLock --> UpdatingChatHistory : Add message
+    UpdatingChatHistory --> ReleasingChatLock : Thread-safe update
+    ReleasingChatLock --> [*]
+  }
+  
+  ProcessingRoommateMatching --> Idle
+  FindingReferralPath --> Idle
+  FormingPods --> Idle
+  ProcessingFriendRequest --> Idle
+  ProcessingChat --> Idle
+}
+
+StudentNetworkReady --> [*] : System shutdown
+
+note right of ProcessingRoommateMatching
+  Gale-Shapley Algorithm:
+  1. Students propose to preferred roommates
+  2. Proposals accepted if receiver is unpaired
+     or prefers proposer over current roommate
+  3. Process continues until stable matching
+end note
+
+note right of FindingReferralPath
+  Dijkstra's Algorithm:
+  - Uses inverted weights (10 - weight)
+  - Stronger connections = shorter paths
+  - Finds path to student with target internship
+end note
+
+note right of ProcessingFriendRequest
+  Thread Safety:
+  - Uses synchronized blocks
+  - Prevents race conditions
+  - Ensures data integrity
+end note
+
+note right of ProcessingChat
+  Thread Safety:
+  - Concurrent message processing
+  - Synchronized chat history updates
+  - Prevents message loss
+end note
+
+@enduml
+
