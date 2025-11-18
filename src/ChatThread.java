@@ -7,6 +7,15 @@
  * @version 1.0
  */
 public class ChatThread implements Runnable {
+    /** The student sending the message */
+    private UniversityStudent sender;
+    
+    /** The student receiving the message */
+    private UniversityStudent receiver;
+    
+    /** The message content to be sent */
+    private String message;
+    
     /**
      * Constructs a ChatThread to send a message from sender to receiver.
      * 
@@ -15,7 +24,9 @@ public class ChatThread implements Runnable {
      * @param message The message content to be sent
      */
     public ChatThread(UniversityStudent sender, UniversityStudent receiver, String message) {
-        // Constructor
+        this.sender = sender;
+        this.receiver = receiver;
+        this.message = message;
     }
 
     /**
@@ -26,6 +37,18 @@ public class ChatThread implements Runnable {
      */
     @Override
     public void run() {
-        // Method signature only
+        // Use synchronized blocks to ensure thread-safe chat history updates
+        // Lock on sender first, then receiver (consistent ordering to avoid deadlock)
+        UniversityStudent first = sender.name.compareTo(receiver.name) < 0 ? sender : receiver;
+        UniversityStudent second = first == sender ? receiver : sender;
+        
+        synchronized (first) {
+            synchronized (second) {
+                // Add message to sender's chat history with receiver
+                sender.addChatMessage(receiver, message);
+                // Also add to receiver's chat history with sender for bidirectional history
+                receiver.addChatMessage(sender, message);
+            }
+        }
     }
 }

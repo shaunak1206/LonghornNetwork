@@ -9,6 +9,15 @@ import java.util.*;
  * @version 1.0
  */
 public class UniversityStudent extends Student {
+    /** The current roommate of this student */
+    private UniversityStudent roommate;
+    
+    /** List of friends (other students) */
+    private List<UniversityStudent> friends;
+    
+    /** Chat history with other students, mapped by student to list of messages */
+    private Map<UniversityStudent, List<String>> chatHistory;
+    
     /**
      * Constructs a new UniversityStudent with the specified attributes.
      * 
@@ -25,7 +34,17 @@ public class UniversityStudent extends Student {
                             String major, double gpa, 
                             List<String> roommatePreferences, 
                             List<String> previousInternships) {
-        // TODO: Constructor implementation
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.year = year;
+        this.major = major;
+        this.gpa = gpa;
+        this.roommatePreferences = new ArrayList<>(roommatePreferences);
+        this.previousInternships = new ArrayList<>(previousInternships);
+        this.roommate = null;
+        this.friends = new ArrayList<>();
+        this.chatHistory = new HashMap<>();
     }
 
     /**
@@ -41,8 +60,37 @@ public class UniversityStudent extends Student {
      */
     @Override
     public int calculateConnectionStrength(Student other) {
-        // TODO: Implementation
-        return 0;
+        if (!(other instanceof UniversityStudent)) {
+            return 0;
+        }
+        
+        UniversityStudent otherStudent = (UniversityStudent) other;
+        int strength = 0;
+        
+        // Roommate: Add 4 if they are roommates
+        if (this.roommate != null && this.roommate.equals(otherStudent)) {
+            strength += 4;
+        }
+        
+        // Shared Internships: Add 3 for each shared internship
+        for (String internship : this.previousInternships) {
+            if (otherStudent.previousInternships.contains(internship) && 
+                !internship.equals("None") && !internship.isEmpty()) {
+                strength += 3;
+            }
+        }
+        
+        // Same Major: Add 2 if they share the same major
+        if (this.major != null && this.major.equals(otherStudent.major)) {
+            strength += 2;
+        }
+        
+        // Same Age: Add 1 if they are the same age
+        if (this.age == otherStudent.age) {
+            strength += 1;
+        }
+        
+        return strength;
     }
 
     /**
@@ -51,8 +99,57 @@ public class UniversityStudent extends Student {
      * @return The UniversityStudent who is the roommate, or null if no roommate is assigned
      */
     public UniversityStudent getRoommate() {
-        // TODO: Implementation
-        return null;
+        return roommate;
+    }
+    
+    /**
+     * Sets the roommate for this student.
+     * 
+     * @param roommate The student to set as roommate
+     */
+    public void setRoommate(UniversityStudent roommate) {
+        this.roommate = roommate;
+    }
+    
+    /**
+     * Gets the list of friends.
+     * 
+     * @return The list of friends
+     */
+    public List<UniversityStudent> getFriends() {
+        return friends;
+    }
+    
+    /**
+     * Adds a friend to this student's friend list.
+     * 
+     * @param friend The student to add as a friend
+     */
+    public void addFriend(UniversityStudent friend) {
+        if (!friends.contains(friend)) {
+            friends.add(friend);
+        }
+    }
+    
+    /**
+     * Gets the chat history with a specific student.
+     * 
+     * @param student The student to get chat history with
+     * @return The list of messages, or null if no chat history exists
+     */
+    public List<String> getChatHistory(UniversityStudent student) {
+        return chatHistory.get(student);
+    }
+    
+    /**
+     * Adds a message to the chat history with a specific student.
+     * 
+     * @param student The student to add message to chat history with
+     * @param message The message to add
+     */
+    public void addChatMessage(UniversityStudent student, String message) {
+        chatHistory.putIfAbsent(student, new ArrayList<>());
+        chatHistory.get(student).add(message);
     }
 
     /**
@@ -62,8 +159,40 @@ public class UniversityStudent extends Student {
      */
     @Override
     public String toString() {
-        // TODO: Implementation
-        return "";
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name: ").append(name).append("\n");
+        sb.append("Age: ").append(age).append("\n");
+        sb.append("Gender: ").append(gender).append("\n");
+        sb.append("Year: ").append(year).append("\n");
+        sb.append("Major: ").append(major).append("\n");
+        sb.append("GPA: ").append(gpa).append("\n");
+        sb.append("RoommatePreferences: ");
+        if (roommatePreferences.isEmpty()) {
+            sb.append("None");
+        } else {
+            sb.append(String.join(", ", roommatePreferences));
+        }
+        sb.append("\n");
+        sb.append("PreviousInternships: ");
+        if (previousInternships.isEmpty()) {
+            sb.append("None");
+        } else {
+            sb.append(String.join(", ", previousInternships));
+        }
+        return sb.toString();
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        UniversityStudent that = (UniversityStudent) obj;
+        return name != null && name.equals(that.name);
+    }
+    
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
     }
 }
 

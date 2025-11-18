@@ -7,6 +7,12 @@
  * @version 1.0
  */
 public class FriendRequestThread implements Runnable {
+    /** The student sending the friend request */
+    private UniversityStudent sender;
+    
+    /** The student receiving the friend request */
+    private UniversityStudent receiver;
+    
     /**
      * Constructs a FriendRequestThread to send a friend request from sender to receiver.
      * 
@@ -14,7 +20,8 @@ public class FriendRequestThread implements Runnable {
      * @param receiver The UniversityStudent receiving the friend request
      */
     public FriendRequestThread(UniversityStudent sender, UniversityStudent receiver) {
-        // Constructor
+        this.sender = sender;
+        this.receiver = receiver;
     }
 
     /**
@@ -25,6 +32,19 @@ public class FriendRequestThread implements Runnable {
      */
     @Override
     public void run() {
-        // Method signature only
+        // Use synchronized blocks to ensure thread-safe friend list updates
+        // Lock on sender first, then receiver (consistent ordering to avoid deadlock)
+        UniversityStudent first = sender.name.compareTo(receiver.name) < 0 ? sender : receiver;
+        UniversityStudent second = first == sender ? receiver : sender;
+        
+        synchronized (first) {
+            synchronized (second) {
+                // Add receiver to sender's friend list
+                sender.addFriend(receiver);
+                // Add sender to receiver's friend list
+                receiver.addFriend(sender);
+                System.out.println(sender.name + " sent a friend request to " + receiver.name);
+            }
+        }
     }
 }

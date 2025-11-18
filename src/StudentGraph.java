@@ -13,6 +13,12 @@ import java.util.*;
  * @version 1.0
  */
 public class StudentGraph {
+    /** Adjacency list mapping each student to their list of edges */
+    private Map<UniversityStudent, List<Edge>> adjacencyList;
+    
+    /** Set of all nodes (students) in the graph */
+    private Set<UniversityStudent> nodes;
+    
     /**
      * Represents an edge in the student graph, connecting two students
      * with a weight representing their connection strength.
@@ -44,7 +50,44 @@ public class StudentGraph {
      * @param students The list of UniversityStudent objects to add to the graph
      */
     public StudentGraph(List<UniversityStudent> students) {
-        // TODO: Implementation
+        this.adjacencyList = new HashMap<>();
+        this.nodes = new HashSet<>();
+        
+        // Add all students as nodes
+        for (UniversityStudent student : students) {
+            nodes.add(student);
+            adjacencyList.put(student, new ArrayList<>());
+        }
+        
+        // Build edges between all pairs of students
+        for (int i = 0; i < students.size(); i++) {
+            UniversityStudent student1 = students.get(i);
+            for (int j = i + 1; j < students.size(); j++) {
+                UniversityStudent student2 = students.get(j);
+                
+                // Calculate connection strength
+                int strength = student1.calculateConnectionStrength(student2);
+                
+                // Only add edge if connection strength > 0
+                if (strength > 0) {
+                    addEdge(student1, student2, strength);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Adds an undirected edge between two students with the given weight.
+     * 
+     * @param student1 The first student
+     * @param student2 The second student
+     * @param weight The connection strength weight
+     */
+    private void addEdge(UniversityStudent student1, UniversityStudent student2, int weight) {
+        // Add edge from student1 to student2
+        adjacencyList.get(student1).add(new Edge(student2, weight));
+        // Add edge from student2 to student1 (undirected graph)
+        adjacencyList.get(student2).add(new Edge(student1, weight));
     }
 
     /**
@@ -53,8 +96,7 @@ public class StudentGraph {
      * @return A collection of all UniversityStudent nodes in the graph
      */
     public Collection<UniversityStudent> getAllNodes() {
-        // TODO: Implementation
-        return new ArrayList<>();
+        return new ArrayList<>(nodes);
     }
 
     /**
@@ -64,8 +106,8 @@ public class StudentGraph {
      * @return A list of Edge objects representing connections to neighboring students
      */
     public List<Edge> getNeighbors(UniversityStudent student) {
-        // TODO: Implementation
-        return new ArrayList<>();
+        List<Edge> neighbors = adjacencyList.get(student);
+        return neighbors != null ? new ArrayList<>(neighbors) : new ArrayList<>();
     }
 
     /**
@@ -73,7 +115,20 @@ public class StudentGraph {
      * Useful for debugging and verification of the graph structure.
      */
     public void displayGraph() {
-        // TODO: Implementation
+        System.out.println("\n=== Student Graph ===");
+        for (UniversityStudent student : nodes) {
+            System.out.print(student.name + " -> [");
+            List<Edge> edges = adjacencyList.get(student);
+            for (int i = 0; i < edges.size(); i++) {
+                Edge edge = edges.get(i);
+                System.out.print("(" + edge.neighbor.name + ", " + edge.weight + ")");
+                if (i < edges.size() - 1) {
+                    System.out.print(", ");
+                }
+            }
+            System.out.println("]");
+        }
+        System.out.println("====================\n");
     }
 }
 
