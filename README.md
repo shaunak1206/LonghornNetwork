@@ -277,13 +277,11 @@ Of note: the last point is subjective and thus is only worth 10 points out of th
 
 ---
 
-## 🤘 React Web Implementation - Complete Guide
+## 🤘 React Web Implementation
 
-### Overview
+This project includes a complete React web implementation with all Longhorn Network features. For detailed setup instructions and a comprehensive build guide, see:
 
-This application has a React web implementation that includes all the Longhorn Network features. This section provides step-by-step instructions to use it and replicate it from scratch.
-
-### What's Included
+### 📖 [React Build Guide](./longhorn-network-react/REACT_BUILD_GUIDE.md)
 
 The React implementation includes:
 - ✅ All core algorithms (Gale-Shapley, Dijkstra's, Prim's)
@@ -293,9 +291,13 @@ The React implementation includes:
 - ✅ Texas Longhorn-themed UI
 - ✅ Complete TypeScript type safety
 
----
+### Quick Start
 
-## 🚀 Quick Start: Using the React App (One-Shot Setup)
+For a quick overview of using the React app, see the [React README](./longhorn-network-react/README.md).
+
+For detailed step-by-step instructions on building the React UI from scratch, see the [React Build Guide](./longhorn-network-react/REACT_BUILD_GUIDE.md).
+
+---
 
 ### Prerequisites
 Before starting, make sure you have:
