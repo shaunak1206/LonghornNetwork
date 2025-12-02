@@ -21,7 +21,14 @@ class UniversityStudent extends Student {
   + UniversityStudent(name, age, gender, year, major, gpa, roommatePreferences, previousInternships)
   + calculateConnectionStrength(Student other) : int
   + getRoommate() : UniversityStudent
+  + setRoommate(roommate: UniversityStudent) : void
+  + getFriends() : List<UniversityStudent>
+  + addFriend(friend: UniversityStudent) : void
+  + getChatHistory(student: UniversityStudent) : List<String>
+  + addChatMessage(student: UniversityStudent, message: String) : void
   + toString() : String
+  + equals(obj: Object) : boolean
+  + hashCode() : int
 }
 
 class StudentGraph {

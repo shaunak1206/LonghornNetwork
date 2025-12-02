@@ -1,0 +1,197 @@
+
+========================================
+=== Running Test Case 1 ===
+========================================
+
+--- Built-in Test Data for Test Case 1 ---
+Name: Alice
+Age: 20
+Gender: Female
+Year: 2
+Major: Computer Science
+GPA: 3.5
+RoommatePreferences: Bob, Charlie, Frank
+PreviousInternships: Google
+Name: Bob
+Age: 21
+Gender: Male
+Year: 3
+Major: Computer Science
+GPA: 3.7
+RoommatePreferences: Alice, Charlie, Frank
+PreviousInternships: Google, Microsoft
+Name: Charlie
+Age: 20
+Gender: Male
+Year: 2
+Major: Mathematics
+GPA: 3.2
+RoommatePreferences: Alice, Bob, Frank
+PreviousInternships: None
+Name: Frank
+Age: 23
+Gender: Male
+Year: 3
+Major: Chemistry
+GPA: 3.1
+RoommatePreferences: Alice, Bob, Charlie
+PreviousInternships: None
+Name: Dana
+Age: 22
+Gender: Female
+Year: 4
+Major: Biology
+GPA: 3.8
+RoommatePreferences: Evan
+PreviousInternships: Pfizer
+Name: Evan
+Age: 22
+Gender: Male
+Year: 4
+Major: Biology
+GPA: 3.6
+RoommatePreferences: Dana
+PreviousInternships: Moderna, Pfizer
+
+--- Automated Tests for Test Case 1 ---
+
+=== Student Graph ===
+Dana -> [(Evan, 6)]
+Bob -> [(Alice, 5)]
+Alice -> [(Bob, 5), (Charlie, 1)]
+Charlie -> [(Alice, 1)]
+Frank -> []
+Evan -> [(Dana, 6)]
+====================
+
+Test: StudentGraph passed (+30 pts).
+Test: GaleShapley passed (+20 pts).
+Alice sent a friend request to Bob
+Bob sent a friend request to Alice
+Test: FriendRequestThread/ChatThread passed (+20 pts).
+ReferralPathFinder returned path: []
+Test: ReferralPathFinder passed (+10 pts).
+Test: Integration passed (+20 pts).
+
+Total Score for Test Case 1: 100
+
+Test Case 1 Final Score: 100
+
+========================================
+=== Running Test Case 2 ===
+========================================
+
+--- Built-in Test Data for Test Case 2 ---
+Name: Greg
+Age: 24
+Gender: Male
+Year: 4
+Major: Economics
+GPA: 3.4
+RoommatePreferences: Helen, Ivy
+PreviousInternships: InternshipA
+Name: Helen
+Age: 24
+Gender: Female
+Year: 4
+Major: Economics
+GPA: 3.5
+RoommatePreferences: Greg, Ivy
+PreviousInternships: InternshipB
+Name: Ivy
+Age: 25
+Gender: Female
+Year: 4
+Major: Economics
+GPA: 3.8
+RoommatePreferences: Helen, Greg
+PreviousInternships: DummyCompany
+
+--- Automated Tests for Test Case 2 ---
+
+=== Student Graph ===
+Greg -> [(Helen, 3), (Ivy, 2)]
+Ivy -> [(Greg, 2), (Helen, 2)]
+Helen -> [(Greg, 3), (Ivy, 2)]
+====================
+
+Test: StudentGraph passed (+30 pts).
+Test: GaleShapley passed (+20 pts).
+Greg sent a friend request to Helen
+Helen sent a friend request to Greg
+Test: FriendRequestThread/ChatThread passed (+20 pts).
+ReferralPathFinder returned path: [Name: Greg
+Age: 24
+Gender: Male
+Year: 4
+Major: Economics
+GPA: 3.4
+RoommatePreferences: Helen, Ivy
+PreviousInternships: InternshipA, Name: Ivy
+Age: 25
+Gender: Female
+Year: 4
+Major: Economics
+GPA: 3.8
+RoommatePreferences: Helen, Greg
+PreviousInternships: DummyCompany]
+Test: ReferralPathFinder passed (+10 pts).
+Test: Integration passed (+20 pts).
+
+Total Score for Test Case 2: 100
+
+Test Case 2 Final Score: 100
+
+========================================
+=== Running Test Case 3 ===
+========================================
+
+--- Built-in Test Data for Test Case 3 ---
+Name: Jack
+Age: 19
+Gender: Male
+Year: 1
+Major: History
+GPA: 3.0
+RoommatePreferences: Kim
+PreviousInternships: MuseumIntern
+Name: Kim
+Age: 19
+Gender: Female
+Year: 1
+Major: History
+GPA: 3.2
+RoommatePreferences: Jack
+PreviousInternships: MuseumIntern
+Name: Leo
+Age: 20
+Gender: Male
+Year: 1
+Major: History
+GPA: 3.5
+RoommatePreferences: None
+PreviousInternships: None
+
+--- Automated Tests for Test Case 3 ---
+
+=== Student Graph ===
+Leo -> [(Jack, 2), (Kim, 2)]
+Jack -> [(Kim, 6), (Leo, 2)]
+Kim -> [(Jack, 6), (Leo, 2)]
+====================
+
+Test: StudentGraph passed (+30 pts).
+Test: GaleShapley passed (+20 pts).
+Jack sent a friend request to Kim
+Kim sent a friend request to Jack
+Test: FriendRequestThread/ChatThread passed (+20 pts).
+ReferralPathFinder returned path: []
+Test: ReferralPathFinder passed (+10 pts).
+Test: Integration passed (+20 pts).
+
+Total Score for Test Case 3: 100
+
+Test Case 3 Final Score: 100
+
+========================================
+Average Score across all test cases: 100

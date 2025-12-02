@@ -272,8 +272,679 @@ Of note: the last point is subjective and thus is only worth 10 points out of th
 
 ### Notes for Students
 - The `StudentGraph` class provides the foundation for both   formation and referral path finding. Ensure your implementation is robust and efficient.
-- Use the provided method signatures and adjust as needed to meet the requirements of Prim’s and Dijkstra’s algorithms.
-- Ask questions during lab sessions or office hours if you’re stuck. Debugging the graph structure is critical for completing this assignment successfully.
+- Use the provided method signatures and adjust as needed to meet the requirements of Prim's and Dijkstra's algorithms.
+- Ask questions during lab sessions or office hours if you're stuck. Debugging the graph structure is critical for completing this assignment successfully.
+
+---
+
+## 🤘 React Web Implementation - Complete Guide
+
+### Overview
+
+This application has a React web implementation that includes all the Longhorn Network features. This section provides step-by-step instructions to use it and replicate it from scratch.
+
+### What's Included
+
+The React implementation includes:
+- ✅ All core algorithms (Gale-Shapley, Dijkstra's, Prim's)
+- ✅ Interactive graph visualization with Canvas
+- ✅ Multithreading simulation (friend requests & chat)
+- ✅ 3 test cases matching the Java implementation
+- ✅ Texas Longhorn-themed UI
+- ✅ Complete TypeScript type safety
+
+---
+
+## 🚀 Quick Start: Using the React App (One-Shot Setup)
+
+### Prerequisites
+Before starting, make sure you have:
+- **Node.js** (version 14 or higher) - [Download here](https://nodejs.org/)
+- **npm** (comes with Node.js)
+- A terminal/command prompt
+- A web browser (Chrome, Firefox, Safari, or Edge)
+
+To check if you have Node.js installed:
+```bash
+node --version
+npm --version
+```
+
+### Step 1: Navigate to the React App
+
+Open your terminal and navigate to the React app directory:
+
+```bash
+cd longhorn-network-react
+```
+
+### Step 2: Install Dependencies
+
+Install all required packages (this only needs to be done once):
+
+```bash
+npm install
+```
+
+**What this does:** Downloads React, TypeScript, and all other dependencies. This may take 1-2 minutes.
+
+### Step 3: Start the Application
+
+Run the development server:
+
+```bash
+npm start
+```
+
+**What happens:**
+- The app compiles (takes 10-20 seconds)
+- Your browser automatically opens to `http://localhost:3000`
+- The Longhorn Network UI appears
+- Any code changes you make will automatically reload the page
+
+**Troubleshooting:**
+- If port 3000 is already in use, it will ask if you want to use a different port (press Y)
+- If the browser doesn't open automatically, manually go to `http://localhost:3000`
+
+---
+
+## 📖 How to Use: Step-by-Step Feature Guide
+
+### Step 1: Load Data
+
+1. **Select a test case** from the dropdown at the top:
+   - **Test Case 1**: Two Groups - 6 students with mutual roommate preferences
+   - **Test Case 2**: Referral Paths - 3 Economics students, includes "DummyCompany" internship
+   - **Test Case 3**: Unpaired Student - 3 History students, one without preferences
+
+2. **Click "Load Data"** button (📥 icon)
+
+3. **What you'll see:**
+   - Success message in the Activity Log (right sidebar - click « to expand)
+   - The Student Graph tab shows a circular network visualization
+   - Nodes = students, Edges = connections, Colors = connection strength
+
+**Activity Log Features:**
+- Click the `«` button on the right edge to expand/collapse the log
+- View timestamped actions with success (✓), error (✗), or info (→) indicators
+- Click "Clear" to reset the log
+
+### Step 2: Visualize the Student Graph
+
+1. **Click "Student Graph"** in the left sidebar (📊 icon)
+
+2. **Understanding the visualization:**
+   - **Nodes (circles)**: Each student, labeled with their name
+   - **Edges (lines)**: Connections between students
+   - **Edge Colors**:
+     - **Cyan** = Strong connection (8+ points)
+     - **Green** = Medium connection (5-7 points)
+     - **Amber** = Weak connection (3-4 points)
+     - **Gray** = Very weak connection (1-2 points)
+   - **Numbers on edges**: Connection strength value
+   - **Legend**: Bottom right shows the color scale
+
+3. **Connection Strength Formula:**
+   - Roommates: +4 points
+   - Each shared internship: +3 points
+   - Same major: +2 points
+   - Same age: +1 point
+
+### Step 3: Match Roommates
+
+1. **Click "Match Roommates"** button in the toolbar
+
+2. **What happens:**
+   - Runs the Gale-Shapley stable matching algorithm
+   - Pairs students based on their preferences
+   - Graph updates to show roommate connections (stronger edges)
+
+3. **View results:**
+   - Click **"Roommates"** tab (🏠 icon) in the left sidebar
+   - See all matched pairs with their preference lists
+   - Unpaired students (with preferences but no match) are also shown
+
+4. **Example output:**
+   ```
+   Pair 1:
+     Alice <-> Bob
+     Alice preferences: Bob, Charlie
+     Bob preferences: Alice, Charlie
+   ```
+
+### Step 4: Form Study Pods
+
+1. **Click "Pods"** tab (👥 icon) in the left sidebar
+
+2. **Set pod size:**
+   - Default is 3 students per pod
+   - You can change this to any number (2-10)
+   - Enter your desired size in the "Pod Size" input field
+
+3. **Click "Form Pods"** button
+
+4. **What happens:**
+   - Uses Prim's algorithm to create groups
+   - Maximizes connection strength within each pod
+   - Handles disconnected students gracefully
+
+5. **View results:**
+   - See all formed pods with member lists
+   - Activity Log shows which students are grouped together
+
+### Step 5: Find Referral Paths
+
+1. **Click "Referral Paths"** tab (🔗 icon) in the left sidebar
+
+2. **Select starting student:**
+   - Use the "Start Student" dropdown
+   - Choose which student is looking for a referral
+
+3. **Enter target company:**
+   - Type the company name in "Target Company" field
+   - **For Test Case 2**, try: `DummyCompany`
+   - **Available companies** are shown if you enter an invalid name
+
+4. **Click "🔍 Find Path"** button
+
+5. **What happens:**
+   - Uses Breadth-First Search (BFS) to find shortest path
+   - Searches through the social network
+   - Finds a student who interned at the target company
+
+6. **View results:**
+   - See step-by-step referral chain
+   - Number of hops required
+   - Final student with the internship is marked with ✓
+
+### Step 6: View Student Details & Social Features
+
+1. **Click "Student Details"** tab (👤 icon) in the left sidebar
+
+2. **Select a student** from the dropdown
+
+3. **View their profile:**
+   - Age, gender, year, major, GPA
+   - Current roommate
+   - Friend list
+   - Chat history with other students
+
+4. **Send a friend request:**
+   - Select a target student from "Send Friend Request" dropdown
+   - Click "+ Add Friend"
+   - Both students are added to each other's friend lists
+   - Refresh to see updated friend list
+
+5. **Send a chat message:**
+   - Select a target student from "Send Message" dropdown
+   - Type your message in the text field
+   - Click "✉ Send" (or press Enter)
+   - Message appears in both students' chat histories
+
+6. **Test concurrent interactions:**
+   - Click "Test Social" button in the toolbar
+   - Simulates multiple friend requests and messages happening simultaneously
+   - Demonstrates thread-safe operations
+
+### Step 7: Refresh and Experiment
+
+1. **Click "↻ Refresh"** button to update all visualizations
+
+2. **Try different test cases:**
+   - Each test case has different student data
+   - Experiment with different companies for referral paths
+   - Try different pod sizes
+
+3. **Monitor the Activity Log:**
+   - Expand the right sidebar (click «)
+   - See all actions timestamped
+   - Clear log when it gets too long
+
+---
+
+## 🔨 How to Replicate: Build Your Own React App
+
+Want to create this from scratch? Follow these steps:
+
+### Step 1: Create a New React App with TypeScript
+
+```bash
+# Navigate to your project root
+cd /path/to/LonghornNetwork
+
+# Create a new React app with TypeScript template
+npx create-react-app longhorn-network-react --template typescript
+
+# Navigate into the new app
+cd longhorn-network-react
+```
+
+**What this does:** Creates a new React project with TypeScript support, including all necessary configuration files.
+
+### Step 2: Install Additional Dependencies (if needed)
+
+The create-react-app template includes everything you need. No additional packages required!
+
+```bash
+# Already included:
+# - react & react-dom (UI framework)
+# - typescript (type checking)
+# - @types/react, @types/react-dom (TypeScript definitions)
+# - react-scripts (build tooling)
+```
+
+### Step 3: Create the Project Structure
+
+Create the following folder structure inside `src/`:
+
+```bash
+# Create directories
+mkdir -p src/models
+mkdir -p src/algorithms
+mkdir -p src/utils
+mkdir -p src/components
+```
+
+**Your structure should look like:**
+```
+src/
+├── models/           # Data structures
+├── algorithms/       # Graph algorithms
+├── utils/           # Helper functions
+├── components/      # React components
+└── App.tsx          # Main component
+```
+
+### Step 4: Implement Core Models
+
+Create these files in `src/models/`:
+
+1. **`Student.ts`** - Abstract base class
+   - Properties: name, age, gender, year, major, GPA
+   - Abstract method: `calculateConnectionStrength()`
+
+2. **`UniversityStudent.ts`** - Extends Student
+   - Additional properties: roommate, friends, chatHistory, previousInternships, roommatePreferences
+   - Implement connection strength formula (+4 roommate, +3 per shared internship, +2 major, +1 age)
+
+3. **`StudentGraph.ts`** - Graph data structure
+   - Use `Map<UniversityStudent, Edge[]>` for adjacency list
+   - Methods: `addEdge()`, `getNeighbors()`, `getAllNodes()`
+   - Edge interface: `{ neighbor: UniversityStudent, weight: number }`
+
+**Key Implementation Tips:**
+- Use TypeScript interfaces for type safety
+- Store edges bidirectionally (undirected graph)
+- Only add edges with weight > 0
+
+### Step 5: Implement Algorithms
+
+Create these files in `src/algorithms/`:
+
+1. **`GaleShapley.ts`** - Stable matching
+   ```typescript
+   // Algorithm outline:
+   // 1. Create queue of unpaired students with preferences
+   // 2. Each student proposes to next person on their list
+   // 3. Receiver accepts if unpaired OR prefers proposer over current roommate
+   // 4. Continue until queue is empty
+   ```
+
+2. **`ReferralPathFinder.ts`** - BFS pathfinding
+   ```typescript
+   // Algorithm outline:
+   // 1. Use queue for BFS traversal
+   // 2. Visit nodes level by level
+   // 3. Check if current student has target internship
+   // 4. Return path when found
+   ```
+
+3. **`PodFormation.ts`** - Group formation
+   ```typescript
+   // Algorithm outline:
+   // 1. Use Prim's MST to find strongly connected components
+   // 2. Group students by podSize
+   // 3. Add stragglers to existing pods
+   ```
+
+**Implementation Resources:**
+- Reference the Java implementations in the main `src/` directory
+- Follow the same logic, adapted to TypeScript syntax
+- Use arrays/Sets/Maps instead of Java collections
+
+### Step 6: Create Threading Simulation
+
+Create `src/utils/ThreadingSimulation.ts`:
+
+```typescript
+// Use JavaScript Promises to simulate threads:
+
+export class FriendRequestThread {
+  async run() {
+    // Add friend bidirectionally
+    // Use setTimeout to simulate async delay
+  }
+}
+
+export class ChatThread {
+  async run() {
+    // Add message to both chat histories
+    // Use setTimeout to simulate async delay
+  }
+}
+
+export class ThreadPool {
+  private threads: Promise<void>[] = [];
+
+  submitFriendRequest(s1, s2) {
+    this.threads.push(new FriendRequestThread(s1, s2).run());
+  }
+
+  async awaitCompletion() {
+    await Promise.all(this.threads);
+  }
+}
+```
+
+### Step 7: Create Test Data Generator
+
+Create `src/utils/TestDataGenerator.ts`:
+
+```typescript
+export class TestDataGenerator {
+  static generateTestCase(caseNum: number): UniversityStudent[] {
+    // Create test data matching the Java test cases
+    // Test Case 1: 6 students, two groups
+    // Test Case 2: 3 students, referral path test
+    // Test Case 3: 3 students, unpaired student
+  }
+}
+```
+
+**Test Data Tips:**
+- Mirror the exact data from Java test cases
+- Include roommate preferences, internships, majors
+- Make sure connection strengths match
+
+### Step 8: Build the Main UI Component
+
+Create `src/components/LonghornNetworkUI.tsx`:
+
+**Component Structure:**
+```typescript
+export const LonghornNetworkUI: React.FC = () => {
+  // State management
+  const [currentStudents, setCurrentStudents] = useState<UniversityStudent[]>([]);
+  const [currentGraph, setCurrentGraph] = useState<StudentGraph | null>(null);
+  const [activeTab, setActiveTab] = useState<'graph' | 'roommates' | 'pods' | 'referrals' | 'details'>('graph');
+
+  // Feature states
+  const [roommateData, setRoommateData] = useState<string>('');
+  const [podData, setPodData] = useState<string>('');
+  // ... more state
+
+  // Canvas ref for graph visualization
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // Feature functions
+  const loadTestData = () => { /* ... */ };
+  const runRoommateMatching = () => { /* ... */ };
+  const runPodFormation = () => { /* ... */ };
+  const findReferralPath = () => { /* ... */ };
+
+  // Canvas rendering effect
+  useEffect(() => {
+    // Draw graph on canvas when data changes
+  }, [currentGraph]);
+
+  // Return JSX
+  return (
+    <div className="ln-app">
+      {/* Sidebar navigation */}
+      {/* Main content area */}
+      {/* Activity log */}
+    </div>
+  );
+};
+```
+
+**Key Implementation Details:**
+
+1. **Graph Visualization (Canvas):**
+   ```typescript
+   // Calculate circular layout
+   const centerX = canvas.width / 2;
+   const centerY = canvas.height / 2;
+   const radius = Math.min(width, height) * 0.32;
+
+   nodes.forEach((node, i) => {
+     const angle = (i * 2 * Math.PI / nodeCount) - Math.PI / 2;
+     const x = centerX + radius * Math.cos(angle);
+     const y = centerY + radius * Math.sin(angle);
+     // Store position and draw
+   });
+   ```
+
+2. **Edge Coloring:**
+   ```typescript
+   const getEdgeColor = (weight: number) => {
+     if (weight >= 8) return '#06B6D4';  // Cyan
+     if (weight >= 5) return '#10B981';  // Green
+     if (weight >= 3) return '#F59E0B';  // Amber
+     return '#E5E7EB';                    // Gray
+   };
+   ```
+
+3. **Activity Log:**
+   ```typescript
+   const addLog = (message: string, type: 'info' | 'success' | 'error') => {
+     const timestamp = new Date().toLocaleTimeString();
+     const prefix = type === 'success' ? '✓' : type === 'error' ? '✗' : '→';
+     setOutputLog(prev => [...prev, `${prefix} ${timestamp} - ${message}`]);
+   };
+   ```
+
+### Step 9: Style the Application
+
+Create `src/components/LonghornNetworkUI.css`:
+
+**Design System:**
+```css
+/* Texas Longhorn Theme */
+:root {
+  --burnt-orange: #BF5700;
+  --cream: #FFF7ED;
+  --charcoal: #0F172A;
+  --cyan: #06B6D4;
+  --spacing: 8px;
+}
+
+/* Layout: 3-column design */
+.ln-app {
+  display: flex;
+  height: 100vh;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.ln-sidebar {
+  width: 280px;
+  background: var(--charcoal);
+  color: white;
+}
+
+.ln-main-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, #FFF7ED, #FFEDD5);
+}
+
+/* Canvas styling */
+.ln-canvas-modern {
+  width: 100%;
+  height: 500px;
+  border-radius: 16px;
+  background: white;
+}
+```
+
+**Styling Tips:**
+- Use CSS Grid/Flexbox for layouts
+- Add smooth transitions (300ms)
+- Use box-shadows for depth
+- Make it responsive with media queries
+
+### Step 10: Connect Everything in App.tsx
+
+Update `src/App.tsx`:
+
+```typescript
+import React from 'react';
+import { LonghornNetworkUI } from './components/LonghornNetworkUI';
+
+function App() {
+  return <LonghornNetworkUI />;
+}
+
+export default App;
+```
+
+### Step 11: Run and Test
+
+```bash
+# Start the development server
+npm start
+
+# In another terminal, run tests
+npm test
+
+# Build for production
+npm run build
+```
+
+### Step 12: Verify Everything Works
+
+Go through this checklist:
+
+- [ ] Load each test case successfully
+- [ ] Graph visualizes with correct colors
+- [ ] Roommate matching produces stable pairs
+- [ ] Pod formation creates groups
+- [ ] Referral path finds correct paths
+- [ ] Friend requests work bidirectionally
+- [ ] Chat messages appear in both histories
+- [ ] Activity log records all actions
+- [ ] UI is responsive and looks good
+
+---
+
+## 🎯 Key Files Reference
+
+| File | Purpose | Lines of Code |
+|------|---------|---------------|
+| `LonghornNetworkUI.tsx` | Main React component with all features | ~1,290 |
+| `StudentGraph.ts` | Graph data structure with adjacency list | ~120 |
+| `UniversityStudent.ts` | Student model with all properties | ~200 |
+| `GaleShapley.ts` | Stable matching algorithm | ~80 |
+| `ReferralPathFinder.ts` | BFS pathfinding algorithm | ~70 |
+| `PodFormation.ts` | Prim's pod formation algorithm | ~100 |
+| `ThreadingSimulation.ts` | Promise-based threading simulation | ~90 |
+| `TestDataGenerator.ts` | Test case data generation | ~150 |
+| `LonghornNetworkUI.css` | Complete styling with Texas theme | ~800 |
+
+**Total:** ~2,900 lines of production-quality code
+
+---
+
+## 🎓 Learning Outcomes
+
+By using and understanding this React implementation, you'll learn:
+
+1. **Graph Algorithms in Practice:**
+   - Gale-Shapley stable matching
+   - Dijkstra's shortest path (BFS variant)
+   - Prim's minimum spanning tree
+
+2. **Modern Web Development:**
+   - React functional components with hooks
+   - TypeScript for type safety
+   - Canvas API for visualizations
+   - Async/await for concurrent operations
+
+3. **Software Engineering:**
+   - Clean code architecture
+   - Separation of concerns (models/algorithms/UI)
+   - Comprehensive documentation
+   - Testing and validation
+
+4. **UI/UX Design:**
+   - Responsive layouts
+   - Color theory and theming
+   - Accessibility considerations
+   - User feedback (activity logs, tooltips)
+
+---
+
+## 🐛 Troubleshooting Common Issues
+
+### Issue: `npm install` fails
+
+**Solution:**
+```bash
+# Clear npm cache
+npm cache clean --force
+
+# Delete node_modules and try again
+rm -rf node_modules package-lock.json
+npm install
+```
+
+### Issue: Port 3000 already in use
+
+**Solution:**
+- Press `Y` when prompted to use a different port, OR
+- Kill the process using port 3000:
+  ```bash
+  # Mac/Linux
+  lsof -ti:3000 | xargs kill -9
+
+  # Windows
+  netstat -ano | findstr :3000
+  taskkill /PID <PID> /F
+  ```
+
+### Issue: Canvas not rendering graph
+
+**Solution:**
+- Make sure you've clicked "Load Data" first
+- Check browser console (F12) for errors
+- Try refreshing the page (Cmd+R / Ctrl+R)
+
+### Issue: TypeScript errors
+
+**Solution:**
+- Make sure all `@types/*` packages are installed
+- Run `npm install` to ensure dependencies are up to date
+- Restart your editor/IDE
+
+### Issue: Algorithms not producing correct results
+
+**Solution:**
+- Verify test data matches the Java implementation
+- Check connection strength calculation formula
+- Ensure graph edges are bidirectional
+- Review algorithm logic against pseudocode
+
+---
+
+## 📚 Additional Resources
+
+- **React Documentation:** https://react.dev/
+- **TypeScript Handbook:** https://www.typescriptlang.org/docs/
+- **Canvas API Guide:** https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API
+- **Graph Algorithms:** https://www.geeksforgeeks.org/graph-data-structure-and-algorithms/
+
+---
 
 ## FAQs
 
