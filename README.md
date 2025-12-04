@@ -1,327 +1,206 @@
-# LonghornNetwork
-## ECE 422C Lab 4, 5, and 6: Networking with Fellow Longhorns!
+# Longhorn Network
 
-### Longhorn Network
+A social network simulation where students are matched with roommates and find referral paths for internships using graph algorithms.
 
-### Overview
-This project simulates a social network called **Longhorn Network**, where students are matched with roommates and find referral paths for internships.
+## 📋 What This Project Does
 
-### Key Objectives
-1. Implement the **Gale-Shapley** algorithm for roommate assignment.
-2. Find internship referral paths using **Dijkstra’s algorithm**.
-3. Use **multithreading** to simulate real-time actions like friend requests and chatting.
+- **Roommate Matching**: Uses Gale-Shapley algorithm to pair students
+- **Referral Path Finding**: Uses Dijkstra's algorithm to find connections to internships
+- **Study Pod Formation**: Uses Prim's algorithm to form student groups
+- **Social Features**: Simulates friend requests and chat with multithreading
+
+## ⚡ Quick Start
+
+### Prerequisites
+- **Java** (JDK 8 or higher) - [Download here](https://www.oracle.com/java/technologies/downloads/)
+- **Node.js** (v14+) - Only needed for React app - [Download here](https://nodejs.org/)
 
 ---
 
-### Getting Started
+## 🚀 How to Run
 
-### IMPORTANT: Please read through the ENTIRE LAB. Implementation details for a later due date might be important now. In practice, it is important to plan ahead!
+### Option 1: Java Command Line (Automated Tests)
 
-#### Folder Structure
-- `src/`: Contains the main code files.
-- `testing/`: Contains `input_sample.txt` and `output_sample.txt`: Sample input and output file format.
-- `README.md`: Project instructions.
+```bash
+# Compile all Java files
+javac -d . src/*.java
 
-#### Prerequisites
-- **Java**
-- Basic knowledge of graph algorithms, threading, and file I/O.
-- If you are unfamiliar with Gale-Shapley, you will find [these resources] (https://www.sanfoundry.com/java-program-gale-shapley-algorithm/) helpful. We should be going over other algorithms in class.
+# Run automated test suite
+java Main
+```
+
+**What it does:**
+- Runs 3 test cases automatically
+- Tests all algorithms (Gale-Shapley, Dijkstra's, Prim's)
+- Displays scores and results
+
 ---
 
-### Instructions
+### Option 2: Java Swing UI (Graphical Interface)
 
-#### Step 1: Setting Up
-1. **Fork** this repository to start working on your own copy. (Not necessary if you can do step 2-6 without any Forbidden Errors)
-2. **Clone** the repository to your local machine:
+```bash
+# Compile (if not already done)
+javac -d . src/*.java
+
+# Launch the GUI
+java LonghornNetworkUI
+```
+
+**Features:**
+- Visualize student graph
+- Match roommates
+- Form study pods
+- Find referral paths
+- View student details
+
+📖 **Detailed UI guide:** [UI_USAGE.md](./UI_USAGE.md)
+
+---
+
+### Option 3: React Web App (Modern Interface)
+
+**Prerequisites Check:**
+First, verify you have Node.js installed:
+```bash
+node --version   # Should show v14.0.0 or higher
+npm --version    # Should show v6.0.0 or higher
+```
+
+If not installed, download Node.js from [nodejs.org](https://nodejs.org/) (choose LTS version).
+
+**Step-by-Step Instructions:**
+
+1. **Navigate to the React app folder:**
    ```bash
-   git clone https://github.com/<your-username>/LonghornNetwork.git
-3. **Choose what you want to add and commit**
+   cd longhorn-network-react
+   ```
+   *(Make sure you're in the LonghornNetwork root directory first)*
+
+2. **Install dependencies (first time only, takes 1-2 minutes):**
    ```bash
-   git add <filepath/filename>
-   git commit -m "commit message of your choosing"
-4. **Push to your branch**, DO NOT COMMIT OR PUSH TO MAIN
+   npm install
+   ```
+   **Expected output:** `added 1333 packages in 25s` (or similar)
+   
+   **If you see errors:**
+   - Make sure you're in the `longhorn-network-react` folder
+   - Try: `npm cache clean --force` then `npm install` again
+
+3. **Start the development server:**
    ```bash
-   git status ##make sure that main pops up here
-   git push
----
+   npm start
+   ```
+   **What happens:**
+   - Compiles the app (takes 10-20 seconds)
+   - Browser automatically opens to `http://localhost:3000`
+   - You'll see "Compiled successfully!" in the terminal
 
-### Step 2: Generate UML Diagram, State Diagram and Javadoc, DUE DATE: Nov 17, 2025 11:59pm
+4. **Using the app:**
+   - Select a test case from the dropdown at the top
+   - Click "Load Data" to load students
+   - Use the sidebar tabs to explore different features
+   - Click "Match Roommates" to run Gale-Shapley algorithm
+   - Click "Form Pods" to create study groups
 
-- **Generate UML Diagram and State Diagram**:
-  - Create a UML diagram based on the class and method signatures.
-  - Include core relationships between classes, such as inheritance, aggregation, and associations.
-  - For the state diagram show the behavior of Longhorn Network, and how each interaction from the core components will occur.
-  
-- **Write Javadoc**:
-  - Generate Javadoc comments for each class and method based on the provided signatures.
-  - Include descriptions of parameters and return types.
----
+**Troubleshooting:**
 
-### Step 3: Implement Core Components DUE DATE FOR EVERYTHING BELOW: Dec 1, 2025 11:59pm
+- **Port 3000 already in use?**
+  ```bash
+  # Press Y when prompted, or use a different port:
+  PORT=3001 npm start
+  ```
 
-Follow the steps below to implement the core functionality of the Longhorn Network. Each section provides specific details, common edge cases, and additional clarifications to help you complete the assignment.
+- **Blank page or errors?**
+  - Check browser console (F12) for errors
+  - Try hard refresh: `Ctrl+Shift+R` (Windows) or `Cmd+Shift+R` (Mac)
+  - Make sure you ran `npm install` first
 
-#### 1. Data Parsing (`DataParser.java`) and Student Graph ('StudentGraph.java')
-- **Task**: Implement the `parseStudents` method to read student information from a file and create `UniversityStudent` objects. This will help begin implementing StudentGraph.java (see below for details). 
-- **Details**:
-  - Input file format is provided in `input_sample.txt`.
-  - Parse all attributes (e.g., name, age, gender, major, GPA).
-  - Store `roommatePreferences` and `previousInternships` as lists.
-  - Validate input and handle missing or invalid data gracefully.
+- **Module not found errors?**
+  ```bash
+  rm -rf node_modules package-lock.json
+  npm install
+  ```
 
-- **Edge Cases**:
-  - Missing fields (e.g., no roommate preferences).
-  - Incorrect formatting in input file (e.g., missing `:` separator).
+**✅ Success Checklist:**
+After running `npm start`, verify:
+- [ ] Terminal shows "Compiled successfully!"
+- [ ] Browser opens automatically to `http://localhost:3000`
+- [ ] You see the Longhorn Network UI (sidebar on left, main area in center)
+- [ ] Test Case dropdown appears at the top
+- [ ] "Load Data" button is visible and clickable
+- [ ] No red errors in browser console (press F12 to check)
 
----
-### Step 4: Implement Core Components DUE DATE FOR EVERYTHING BELOW: Dec 1st, 2025 11:59pm
+**Quick Test:**
+1. Select "Test Case 1" from dropdown
+2. Click "Load Data" button
+3. You should see a graph visualization with 6 students
+4. If you see this, everything is working! 🎉
 
----
+**If you see errors:** Check the troubleshooting section above or see [React Setup Guide](./longhorn-network-react/SETUP.md).
 
-### Suggestions for `StudentGraph`
-
-The `StudentGraph` class is intentionally left for you to design and implement. This component is critical for both   formation (using Prim’s algorithm) and referral path finding (using Dijkstra’s algorithm). Follow the steps below to implement it effectively.
-
----
-
-#### 1. Purpose of the Graph
-The `StudentGraph` represents the relationships between students as a weighted graph. Each student is a node, and the connection strength between two students is an edge with a corresponding weight.
-
----
-
-#### 2. Key Requirements
-The graph should support the following:
-1. Adding students as nodes.
-2. Adding edges between students with weights (connection strengths).
-3. Efficient traversal for algorithms like Prim’s and Dijkstra’s.
-
----
-
-#### 3. Recommended Design
-- Use an **Adjacency List** for the graph representation:
-  - Each student (node) maps to a list of edges, where each edge connects to another student and has a weight.
-  - Example:
-    ```
-    Alice -> [(Bob, 7), (Charlie, 5)]
-    Bob   -> [(Alice, 7), (Charlie, 2)]
-    ```
+📖 **More help:**
+- [React Quick Start](./longhorn-network-react/README.md) - Detailed usage guide
+- [React Setup Guide](./longhorn-network-react/SETUP.md) - Complete troubleshooting
+- [React Build Guide](./longhorn-network-react/REACT_BUILD_GUIDE.md) - Build from scratch
 
 ---
 
-#### 4. Methods to Implement
-Here are the key methods you should include in the `StudentGraph` class:
+## 📁 Project Structure
 
-1. **Constructor**:
-   - Initialize the graph structure (e.g., an adjacency list).
-   - Add all students to the graph.
-
-2. **Add Edge**:
-   - Add a weighted edge between two students.
-   - Ensure the graph is undirected by adding the edge in both directions.
-
-3. **Get Neighbors**:
-   - Return a list of edges connected to a specific student.
-   - Useful for traversal algorithms like Prim’s and Dijkstra’s.
-
-4. **Get All Nodes**:
-   - Return all nodes (students) in the graph.
-   - Useful for initializing traversal algorithms.
+```
+LonghornNetwork/
+├── src/                    # Java source code
+├── testing/                # Test input/output files
+├── longhorn-network-react/ # React web application
+├── README.md              # This file (quick start)
+└── PROJECT_GUIDE.md       # Complete project instructions
+```
 
 ---
 
-#### 5. Implementation Steps
-1. **Build the Graph**:
-   - Iterate over all pairs of students.
-   - For each pair, calculate the connection strength using `calculateConnectionStrength`.
-   - Add an edge between the two students with the calculated weight.
+## 📚 Documentation
 
-2. **Example Scenario**:
-   - Given students Alice, Bob, and Charlie:
-     - If Alice has a connection strength of 7 with Bob, and 5 with Charlie:
-       ```
-       Alice -> [(Bob, 7), (Charlie, 5)]
-       Bob   -> [(Alice, 7)]
-       Charlie -> [(Alice, 5)]
-       ```
+- **[PROJECT_GUIDE.md](./PROJECT_GUIDE.md)** - Complete project instructions, requirements, and implementation details
+- **[UI_USAGE.md](./UI_USAGE.md)** - Detailed Swing UI usage guide
+- **[React README](./longhorn-network-react/README.md)** - React app quick start
+- **[React Build Guide](./longhorn-network-react/REACT_BUILD_GUIDE.md)** - Complete React build instructions
 
 ---
 
-#### 6. Testing the Graph
-Test your graph implementation before using it in algorithms:
-- Print the adjacency list to ensure edges and weights are correct.
-- Test with edge cases:
-  1. Students with no connections.
-  2. Students with identical connection strengths to multiple others.
+## 🎯 For Students
 
----
+This is **ECE 422C Lab 4, 5, and 6**. 
 
-
-#### 7. Roommate Matching (`GaleShapley.java`)
-- **Task**: Implement the Gale-Shapley stable matching algorithm to pair students based on roommate preferences.
-- **Details**:
-  - Each student has a list of preferred roommates. Mutual preferences are prioritized.
-  - Students without preferences should remain unpaired.
-  - Handle cases where preferences are incomplete or cyclic.
-
-- **Steps**:
-  - Parse preference lists for all students.
-  - Use a queue for unpaired students to iterate through proposals.
-  - A proposal is accepted if the receiver is unpaired or prefers the proposer over their current roommate.
-
-- **Edge Cases**:
-  - Students with empty or partial preference lists.
-  - Cyclic or conflicting preferences (e.g., Alice prefers Bob, Bob prefers Charlie, Charlie prefers Alice).
-
----
-
-#### 8. Referral Path Finding (`ReferralPathFinder.java`)
-- **Task**: Use Dijkstra’s algorithm to find the shortest path (strongest connection) to a student who interned at a specific company.
-- **Details**:
-  - Stronger connections should be treated as "shorter" paths.
-  - Allow user input to specify the target company.
-
-- **Steps**:
-  - Invert the connection weights (e.g., use `10 - weight` for stronger connections).
-  - Traverse the graph using Dijkstra’s algorithm from the starting student.
-  - Return the path if a student with the target internship is found.
-
-- **Edge Cases**:
-  - No student with the target internship.
-  - Disconnected graphs with no path to a target.
-
----
-
-#### 9. Connection Strength (`calculateConnectionStrength`)
-- **Task**: Implement a formula to calculate the connection strength between two students based on the following criteria:
-  - **Roommate**: Add 4 if they are roommates.
-  - **Shared Internships**: Add 3 for each shared internship.
-  - **Same Major**: Add 2 if they share the same major.
-  - **Same Age**: Add 1 if they are the same age.
-
-- **Details**:
-  - This method will be implemented in the `UniversityStudent` class as an override of the abstract method in `Student`.
-  - Ensure the method accurately accounts for all the above factors to return the correct connection strength.
-
-- **Edge Cases**:
-  - Students with no shared attributes (e.g., no roommate, no shared internships, etc.).
-  - Students with no chat history or no defined   membership.
-  - Students who are roommates but have no other connections.
-
----
-
-#### 10. Multithreading (`FriendRequestThread` and `ChatThread`)
-- **Task**: Simulate concurrent actions like sending friend requests and chatting between students.
-- **Details**:
-  - Use threads to manage these interactions concurrently, simulating real-time behavior.
-  - Ensure thread-safe operations when updating shared resources such as `chatHistory`.
-
-- **Steps**:
-  1. Use `ExecutorService` to manage multiple threads efficiently.
-  2. Implement thread-safe methods using synchronized blocks or concurrent data structures to handle:
-     - Friend requests: Add students to each other’s friend lists.
-     - Messaging: Update chat histories between students.
-  3. Log interactions (e.g., "Alice sent a friend request to Bob") for debugging and verification.
-
-- **Testing**:
-  - Test with overlapping friend requests and chat threads to ensure thread safety and proper synchronization.
-  - Verify that all friend requests and messages are processed without data corruption or missed updates.
-
----
-
-#### 11. Testing and Validation
-- **Sample Input**:
-  - Use the provided `input_sample.txt` to verify your implementation.
-  - Ensure all attributes in the input file (e.g., roommate preferences, internships) are parsed correctly.
-
-- **Expected Output**:
-  - Roommate Assignments:
-    - Each student should be matched with their highest-priority roommate if mutually possible.
-  - Referral Paths:
-    - The path to a student with the specified internship should have the shortest total connection cost.
-
-- **Edge Cases**:
-  1. **Incomplete Data**:
-     - Students with missing roommate preferences, no internships, or incomplete attributes.
-  2. **Disconnected Graphs**:
-     - Ensure that all connected components are handled independently.
-  3. **Isolated Nodes**:
-     - A single student with no connections should form their own  .
-  4. **Multithreading**:
-     - Overlapping threads for friend requests and messaging must not corrupt shared resources.
-     - Ensure all threads finish execution within a reasonable time frame.
-
-- **Validation**:
-  - Compare the output of your implementation with the provided `output_sample.txt`.
-  - Write your own additional test cases to ensure robustness and correctness.
-
-### Step 5: Implement Core Components DUE DATE FOR EVERYTHING BELOW: Dec 8th, 2025 11:59pm
-
-#### SWING UI
-
-##### An implementation of an user interface using Swing UI. An easy implementation would be to visualize the student graph as either an adjacency list or adjacency matrix, as well as visualizing the roommates,   formations.
-
-**Video Script for 2-4 minute video to be turned in on Apr 30th, 2024 11:59pm**
-   - Loading data from Main.java. Use the given main.java to load data. This can be displayed by simply showing the different test cases being loaded once the UI loads up. [20 points]
-   - Visualize the data as a graph. Display a graph that shows students and their names and connections as weighted edges. Must be displayed as a graph. [30 points]
-   - Visualize roommates within the [15 points]
-   - Visualize the referral path finder [15 points]
-   - Visualize each student's friend request and chat history. If 'None' then show 'None'. [10 points]
-   - Intuitive & Friendly User Interface. Is the user interface intuitive to use, are their load data, filter data by student, run buttons or equivalents? Is the user interface just one or two monotone colors or vibrant? [10 points]
-
-Of note: the last point is subjective and thus is only worth 10 points out of the total 100 of your grade. Mainly we want to evaluate the amount of effort your provided to the final part of this lab.   
-
-### Notes for Students
-- The `StudentGraph` class provides the foundation for both   formation and referral path finding. Ensure your implementation is robust and efficient.
-- Use the provided method signatures and adjust as needed to meet the requirements of Prim's and Dijkstra's algorithms.
-- Ask questions during lab sessions or office hours if you're stuck. Debugging the graph structure is critical for completing this assignment successfully.
+**Need detailed instructions?** See [PROJECT_GUIDE.md](./PROJECT_GUIDE.md) for:
+- Complete implementation requirements
+- Step-by-step instructions
+- Due dates and grading criteria
+- Algorithm details and edge cases
+- Testing guidelines
 
 ---
 
 ## 🤘 React Web Implementation
 
-This project includes a complete React web implementation with all Longhorn Network features. For detailed setup instructions and a comprehensive build guide, see:
-
-### 📖 [React Build Guide](./longhorn-network-react/REACT_BUILD_GUIDE.md)
-
-The React implementation includes:
+This project includes a complete React web implementation with:
 - ✅ All core algorithms (Gale-Shapley, Dijkstra's, Prim's)
-- ✅ Interactive graph visualization with Canvas
-- ✅ Multithreading simulation (friend requests & chat)
-- ✅ 3 test cases matching the Java implementation
-- ✅ Texas Longhorn-themed UI
-- ✅ Complete TypeScript type safety
+- ✅ Interactive graph visualization
+- ✅ Multithreading simulation
+- ✅ Modern Texas Longhorn-themed UI
 
-### Quick Start
-
-For a quick overview of using the React app, see the [React README](./longhorn-network-react/README.md).
-
-For detailed step-by-step instructions on building the React UI from scratch, see the [React Build Guide](./longhorn-network-react/REACT_BUILD_GUIDE.md).
+See [React README](./longhorn-network-react/README.md) for details.
 
 ---
 
-## FAQs
+## 💡 Quick Tips
 
-### 1. Should we use inverted edge weights (10 - weight) in anywhere else?
-- **No**, inverted edge weights are only used in the referral path finder to prioritize stronger connections as shorter paths.
-- For   formation, use the **calculated connection strength** directly to minimize the total weight of the  s. This ensures that  s are formed based on the strongest relationships between students.
-
----
-
-### 2. How do we get disconnected graphs as mentioned in the edge cases?
-- Students are disconnected if their **connection strength is 0**, meaning they share no attributes such as internships,  s, etc.
-- Disconnected graphs occur naturally when there are groups of students with no connections to each other.
-  - For example:
-    ```
-    Component 1: Alice - Bob
-    Component 2: Charlie
-    ```
-- **Important**: 
-  - Do not add an edge for pairs of students with a connection strength of 0.
-  - These students are simply not connected in the graph.
+1. **First time?** Start with `java Main` to see automated tests
+2. **Want visuals?** Try `java LonghornNetworkUI` for the GUI
+3. **Prefer web?** Use the React app for a modern interface
+4. **Need help?** Check [PROJECT_GUIDE.md](./PROJECT_GUIDE.md) for detailed instructions
 
 ---
 
-### 3. Can two students have the exact same name?
-- **No**, all student names are guaranteed to be distinct in this assignment.
-- You can safely use student names to uniquely identify nodes in the graph and validate roommate preferences.
+## 📝 License
 
+This project is part of ECE 422C coursework at UT Austin.
