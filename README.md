@@ -2,6 +2,14 @@
 
 A social network simulation where students are matched with roommates and find referral paths for internships using graph algorithms.
 
+## 🎥 Demo Video
+
+**Watch the demo:** [https://www.loom.com/share/d82df7e8d8704199ae6844e77d66af31](https://www.loom.com/share/d82df7e8d8704199ae6844e77d66af31)
+
+See the Longhorn Network in action with a complete walkthrough of all features!
+
+---
+
 ## 📋 What This Project Does
 
 - **Roommate Matching**: Uses Gale-Shapley algorithm to pair students
