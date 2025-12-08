@@ -405,18 +405,6 @@ npx tsc --noEmit
 
 **Recommended Placement: Week 15 (Advanced Topics)**
 
-**Why Week 15 is ideal:**
-- Students have completed all prerequisites:
-  - ✅ Java fundamentals (Weeks 1-4)
-  - ✅ Data structures (Weeks 5-7)
-  - ✅ UI concepts via Swing (Week 10)
-  - ✅ Graph algorithms (Week 13)
-  - ✅ Multithreading (Weeks 8-9)
-- Natural fit for "Advanced Topics" alongside Design Patterns, Parallel Streams, etc.
-- Students have already completed the Longhorn Network lab in Java, so they understand the problem domain
-- Perfect timing for extra credit assignment (as mentioned on Tuesday, 12/2)
-- Allows students to compare imperative (Java/Swing) vs declarative (React) programming paradigms
-
 **Suggested React Curriculum (Week 15):**
 
 - **Tuesday (Advanced Topics - React Part 1)**: 
