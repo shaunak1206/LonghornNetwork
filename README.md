@@ -68,6 +68,8 @@ npm install
 npm start
 ```
 
+**Note for macOS users:** If you see a popup saying `"fsevents.node" cannot be opened because the developer cannot be verified`, simply click **Cancel** on both popups (if two appear). The app will work fine - this is just a macOS security warning for a native file-watching module used by the development server. The application functionality is not affected.
+
 The app will open at `http://localhost:3000`
 
 📖 **For detailed setup instructions, troubleshooting, and extra credit documentation, see the [Extra Credit Assignment](#-extra-credit-assignment-react-ui-implementation) section below.**
@@ -226,6 +228,8 @@ added 1333 packages in 25s
 ```bash
 npm start
 ```
+
+**Note for macOS users:** If you see a popup saying `"fsevents.node" cannot be opened because the developer cannot be verified`, simply click **Cancel** on both popups (if two appear). The app will work fine - this is just a macOS security warning for a native file-watching module used by the development server. The application functionality is not affected.
 
 **Expected Output:**
 ```
