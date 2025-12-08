@@ -92,8 +92,8 @@ export class FriendRequestThread {
 
     // Use consistent ordering to prevent deadlocks
     // In a real multi-threaded environment, this would be synchronized blocks
-    const first = this.sender.getName().localeCompare(this.receiver.getName()) < 0 ? this.sender : this.receiver;
-    const second = first === this.sender ? this.receiver : this.sender;
+    // Order students alphabetically to ensure consistent lock ordering
+    // (In JavaScript, we don't need explicit locking, but the ordering concept is documented)
 
     // Simulate locked section (would be synchronized in Java)
     // Add receiver to sender's friend list
@@ -192,8 +192,8 @@ export class ChatThread {
     await this.delay(Math.random() * 100 + 50);
 
     // Use consistent ordering to prevent deadlocks
-    const first = this.sender.getName().localeCompare(this.receiver.getName()) < 0 ? this.sender : this.receiver;
-    const second = first === this.sender ? this.receiver : this.sender;
+    // Order students alphabetically to ensure consistent lock ordering
+    // (In JavaScript, we don't need explicit locking, but the ordering concept is documented)
 
     // Simulate locked section (would be synchronized in Java)
     // Add message to sender's chat history with receiver
@@ -236,13 +236,6 @@ export class ThreadPool {
 
   /** Array of log messages from all tasks */
   private logs: string[] = [];
-
-  /**
-   * Constructs a new ThreadPool.
-   */
-  constructor() {
-    // Initialize empty
-  }
 
   /**
    * Submits a friend request task to the pool.

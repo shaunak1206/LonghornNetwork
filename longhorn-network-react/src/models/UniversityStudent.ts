@@ -68,6 +68,7 @@ export class UniversityStudent extends Student {
    * @param roommatePreferences - Array of preferred roommate names in priority order
    * @param previousInternships - Array of company names where the student interned
    */
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(
     name: string,
     age: number,

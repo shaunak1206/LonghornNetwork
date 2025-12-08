@@ -22,7 +22,7 @@
  */
 
 import { UniversityStudent } from '../models/UniversityStudent';
-import { StudentGraph, Edge } from '../models/StudentGraph';
+import { StudentGraph } from '../models/StudentGraph';
 
 /**
  * Helper class for edge candidates in Prim's algorithm.
